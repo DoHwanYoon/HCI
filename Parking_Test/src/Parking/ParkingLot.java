@@ -1,7 +1,5 @@
 package Parking;
 
-//import java.util.Scanner;
-
 public class ParkingLot {
 
 	private String[][] parkingLotOne; // 1번 주차 배열 

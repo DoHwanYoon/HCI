@@ -11,7 +11,6 @@ public class InOut {
 	
 	
 	public InOut() {
-		//scan = new Scanner(System.in);
 		parkingLot = new ParkingLot();
 		parkingLotOne = new String[4][4];
 		parkingLotTwo = new String[4][4];
