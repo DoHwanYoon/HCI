@@ -4,37 +4,38 @@ public class InOut {
 	
 	private int parkingLotFloor; //출차할 차량의 층
 	private int carMoveCount; //출차할 차량이 움직여야 하는 횟수
-	private String parkingState;
-	ParkingLot parkingLot;
-	private String[][] tempLotOne;
-	private String[][] tempLotTwo;
+	private String parkingState; //출차할 차량의 배열 위치 
+	private String[][] parkingLotOne; // 1번 주차 배열 
+	private String[][] parkingLotTwo; // 2번 주차 배열 
+	ParkingLot parkingLot; //parkingLot class 객체 
 	
 	
 	public InOut() {
 		//scan = new Scanner(System.in);
 		parkingLot = new ParkingLot();
-		tempLotOne = new String[4][4];
-		tempLotTwo = new String[4][4];
+		parkingLotOne = new String[4][4];
+		parkingLotTwo = new String[4][4];
 	}
 
 	public void getParkingLot() {
-		tempLotOne=parkingLot.getParkingLotOne();
-		tempLotTwo=parkingLot.getParkingLotTwo();
+		parkingLotOne=parkingLot.getParkingLotOne();
+		parkingLotTwo=parkingLot.getParkingLotTwo();
 	}
 	public void setParkingLot() {
-		parkingLot.setParkingLotOne(tempLotOne);
-		parkingLot.setParkingLotTwo(tempLotTwo);
+		parkingLot.setParkingLotOne(parkingLotOne);
+		parkingLot.setParkingLotTwo(parkingLotTwo);
 	}
 	
-	public void findCar(String carNumber) {
+	// 출차 하고자 하는 차량의 parkingState(배열위치), parkingLotFloor(차량의 층)와 carMoveCount(출차를 위해 움직여야하는 횟수)값을 세팅.
+	public void setCarLocation(String carNumber) {
 		for(int i=0; i<4; i++) {
 			for(int j=0; j<4; j++) {
-				if(tempLotOne[i][j].equals(carNumber)) {
+				if(parkingLotOne[i][j].equals(carNumber)) {
 					parkingLotFloor = i;
 					carMoveCount = j;
 					parkingState = "one";
 				}
-				else if(tempLotTwo[i][j].equals(carNumber)) {
+				else if(parkingLotTwo[i][j].equals(carNumber)) {
 					parkingLotFloor = i;
 					carMoveCount = j;
 					parkingState = "two";
@@ -43,24 +44,25 @@ public class InOut {
 		}
 	}
 	
-	public void In(String carNumber) {
+	// 입차를 위한 함수. 
+	public void setIn(String carNumber) {
 		//inputCarNumber();
 		boolean isParking = false;
 		getParkingLot();
 		for(int i=0; i<4; i++) {
 			if(isParking==false) {
-				if(tempLotOne[i][0] == "xxxx") {
+				if(parkingLotOne[i][0] == "xxxx") {
 					for(int j=0; j<3; j++) {
-						tempLotOne[i][j]=tempLotOne[i][j+1];
+						parkingLotOne[i][j]=parkingLotOne[i][j+1];
 					}
-					tempLotOne[i][3]=carNumber;
+					parkingLotOne[i][3]=carNumber;
 					isParking=true;
 				}
-				else if(tempLotTwo[i][3] == "xxxx") {
+				else if(parkingLotTwo[i][3] == "xxxx") {
 					for(int k=2; k>=0; k--) {
-						tempLotTwo[i][k+1]=tempLotTwo[i][k];
+						parkingLotTwo[i][k+1]=parkingLotTwo[i][k];
 					}
-					tempLotTwo[i][0]=carNumber;
+					parkingLotTwo[i][0]=carNumber;
 					isParking=true;
 				}
 			}else break;
@@ -68,56 +70,100 @@ public class InOut {
 		setParkingLot();
 	}
 	
-	public void moveCar(String carNumber) {
+	// 출차 시 이동이 필요한 차량을 재 주차시키는 함수. 
+	public void setMoveCar(String carNumber) {
 		boolean isParking = false;
-		for(int i=0; i<4; i++) {
-			if(isParking==false) {
-				if(tempLotOne[i][0] == "xxxx" && parkingState != "one" || i != parkingLotFloor ) {
-					for(int j=0; j<3; j++) {
-						tempLotOne[i][j]=tempLotOne[i][j+1];
+		
+		// 출차할 차량의 parkingState가 "one" 일 때 같은층의 parkingStateTwo에 빈자리가 있다면 주차.
+		if(parkingState=="one" && parkingLotOne[parkingLotFloor][3]=="xxxx") {
+			for(int k=2; k>=0; k--) {
+				parkingLotOne[parkingLotFloor][k+1]=parkingLotOne[parkingLotFloor][k];
+			}
+			parkingLotTwo[parkingLotFloor][0]=carNumber;
+		}
+		
+		// 출차할 차량의 parkingState가 two" 일 때 같은층의 parkingStateOne에 빈자리가 있다면 주차.
+		else if(parkingState=="two" && parkingLotOne[parkingLotFloor][0] == "xxxx") {
+			for(int j=0; j<3; j++) {
+				parkingLotOne[parkingLotFloor][j]=parkingLotOne[parkingLotFloor][j+1];
+			}
+			parkingLotOne[parkingLotFloor][3]=carNumber;
+		}
+		
+		// 출차할 차량의 parkingLotFloor가 1층 또는 2층일 경우 parkingLotFloor를 제외하고 내림차순으로 주차자리 탐색 후 주차.
+		else if(parkingLotFloor == 0 || parkingLotFloor == 1) {
+			for(int i = 0; i<=3; i++) {
+				if(isParking==false) {
+					if(parkingLotOne[i][0] == "xxxx" && i != parkingLotFloor ) {
+						for(int j=0; j<3; j++) {
+							parkingLotOne[i][j]=parkingLotOne[i][j+1];
+						}
+						parkingLotOne[i][3]=carNumber;
+						isParking=true;
 					}
-					tempLotOne[i][3]=carNumber;
-					isParking=true;
-				}
-				else if(tempLotTwo[i][3] == "xxxx" && parkingState != "two" || i != parkingLotFloor) {
-					for(int k=2; k>=0; k--) {
-						tempLotTwo[i][k+1]=tempLotTwo[i][k];
+					else if(parkingLotTwo[i][3] == "xxxx" && i != parkingLotFloor) {
+						for(int k=2; k>=0; k--) {
+							parkingLotTwo[i][k+1]=parkingLotTwo[i][k];
+						}
+						parkingLotTwo[i][0]=carNumber;
+						isParking=true;
 					}
-					tempLotTwo[i][0]=carNumber;
-					isParking=true;
 				}
-			}else break;
+			}
+		}
+		
+		// 출차할 차량의 parkingLotFloor가 3층 또는 4층일 경우 parkingLotFloor를 제외하고 오름차순으로 주차자리 탐색 후 주차.
+		else if(parkingLotFloor == 2 || parkingLotFloor == 3) {
+			for(int i= 3; i>=0; i--) {
+				if(isParking==false) {
+					if(parkingLotOne[i][0] == "xxxx" && i != parkingLotFloor ) {
+						for(int j=0; j<3; j++) {
+							parkingLotOne[i][j]=parkingLotOne[i][j+1];
+						}
+						parkingLotOne[i][3]=carNumber;
+						isParking=true;
+					}
+					else if(parkingLotTwo[i][3] == "xxxx" && i != parkingLotFloor) {
+						for(int k=2; k>=0; k--) {
+							parkingLotTwo[i][k+1]=parkingLotTwo[i][k];
+						}
+						parkingLotTwo[i][0]=carNumber;
+						isParking=true;
+					}
+				}
+			}
 		}
 	}
-	
-	public void Out(String carNumber) {
+
+	// 출차를 위한 함수. 
+	public void setOut(String carNumber) {
 		//inputCarNumber();
 		//boolean isExit = false;
 		String tempCarNumber = null;
 		getParkingLot();
-		findCar(carNumber);
+		setCarLocation(carNumber);
 		if(parkingState.equals("one")){
 			for(int i=0; i<4-carMoveCount; i++) {
 				if(i<3-carMoveCount) {		
-					tempCarNumber = tempLotOne[parkingLotFloor][3];
-					moveCar(tempCarNumber);
+					tempCarNumber = parkingLotOne[parkingLotFloor][3];
+					setMoveCar(tempCarNumber);
 				}
 				for(int j=2; j>=0; j--) {
-					tempLotOne[parkingLotFloor][j+1] = tempLotOne[parkingLotFloor][j];
+					parkingLotOne[parkingLotFloor][j+1] = parkingLotOne[parkingLotFloor][j];
 				}
-				tempLotOne[parkingLotFloor][0] = "xxxx";
+				parkingLotOne[parkingLotFloor][0] = "xxxx";
 			}
 		}
 		else if(parkingState.equals("two")) {
 			for(int i=0; i<= carMoveCount; i++) {
 				if(i < carMoveCount) {
-					tempCarNumber = tempLotTwo[parkingLotFloor][0];
-					moveCar(tempCarNumber);
+					tempCarNumber = parkingLotTwo[parkingLotFloor][0];
+					setMoveCar(tempCarNumber);
 				}
 				for(int j=0; j<=2; j++) {
-					tempLotTwo[parkingLotFloor][j] = tempLotTwo[parkingLotFloor][j+1];
+					parkingLotTwo[parkingLotFloor][j] = parkingLotTwo[parkingLotFloor][j+1];
 				}
-				tempLotTwo[parkingLotFloor][3] = "xxxx";
+				parkingLotTwo[parkingLotFloor][3] = "xxxx";
 			}
 		}
 		setParkingLot();

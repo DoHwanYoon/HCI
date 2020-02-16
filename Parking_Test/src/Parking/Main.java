@@ -3,18 +3,16 @@ package Parking;
 import java.util.Scanner;
 
 public class Main {
-	Scanner scan;
-	InOut inOut;
-	String carNumber;
+	public Scanner scan;
+	public String carNumber;
 	
 	public Main() {
 		scan = new Scanner(System.in);
-		inOut = new InOut();
 		carNumber = null;
 	}
 	
 	void menu() {
-	      //InOut InOut = new InOut();
+	      InOut inOut = new InOut();
 	      
 	      boolean isRun = true;
 	      
@@ -31,17 +29,17 @@ public class Main {
 	         
 	         switch(sel) {
 	         case 1:
-	            //inputCarNumber();
 	        	System.out.print("차량번호 4자리를 입력하세요 : ");
 	   	      	carNumber = scan.next();
-	            inOut.In(carNumber);
+	            inOut.setIn(carNumber);
+	            System.out.println("주차가 완료되었습니다. ");
 	            break;
 	               
 	         case 2:
-	            //inputCarNumber();
 		        System.out.print("차량번호 4자리를 입력하세요 : ");
 		   	    carNumber = scan.next();
-	            inOut.Out(carNumber);
+	            inOut.setOut(carNumber);
+	            System.out.println("출차가 완료되었습니다. ");
 	            break;
 	            
 	         case 3:
@@ -62,11 +60,5 @@ public class Main {
 	}
 }
 
-
-// 클래스에 속성 추가해주기 -
-// 함수 리턴값 지정해주기
-// UI와 데이터 하나의 클래스로 합치기 -
-// 근접한 자리로 차량이동 가능하게 기능 추가하기
-// in, out 클래스 분리시켜보기 
 // xml 구조 확인
 // 파싱 개념 확인 

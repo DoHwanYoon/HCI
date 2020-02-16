@@ -4,17 +4,13 @@ package Parking;
 
 public class ParkingLot {
 
-	private String[][] parkingLotOne;
-	private String[][] parkingLotTwo;
-	//public String carNumber;
-	//public Scanner scan;
+	private String[][] parkingLotOne; // 1번 주차 배열 
+	private String[][] parkingLotTwo; // 2번 주차 배열 
 	
 	public ParkingLot() {
 		
 		parkingLotOne = new String[4][4];
 		parkingLotTwo = new String[4][4];
-		//scan = new Scanner(System.in);
-		//carNumber = null;
 		
 		for(int i=0; i<4; i++) { //주차장 배열 초기화 
 			for(int j=0; j<4; j++) {
