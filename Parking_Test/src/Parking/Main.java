@@ -22,6 +22,7 @@ public class Main {
 	
 	void menu() {
 	      InOut inOut = new InOut();
+	      //ParkingLot parkingLot = new ParkingLot();
 	      
 	      boolean isRun = true;
 	      
@@ -40,7 +41,7 @@ public class Main {
 	         case 1:
 	        	System.out.print("차량번호 4자리를 입력하세요 : ");
 	   	      	carNumber = scan.next();
-	            inOut.setIn(carNumber);
+	   	      	inOut.setIn(carNumber);
 	            System.out.println("주차가 완료되었습니다. ");
 	            break;
 	               

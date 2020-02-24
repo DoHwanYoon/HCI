@@ -2,6 +2,7 @@ package Parking;
 
 public class ParkingLot {
 
+	
 	private String[][] parkingLotOne; // 1번 주차 배열 
 	private String[][] parkingLotTwo; // 2번 주차 배열 
 	
