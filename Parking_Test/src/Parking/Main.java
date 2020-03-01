@@ -2,13 +2,13 @@ package Parking;
 
 import java.util.Scanner;
 
-/* ì£¼ì°¨í”„ë¡œê·¸ë¨
- * 4x4 ë°°ì—´ ë‘ ê°œì˜ ì£¼ì°¨ê³µê°„ì´ ìˆê³ , ê° ì¸µì€ ì»¨ë² ì´ì–´ë²¨íŠ¸ êµ¬ì¡°ë¡œ ì›€ì§ì¸ë‹¤. 
- * ì£¼ì°¨ê³µê°„ì˜ ë°°ì¹˜ëŠ” í”„ë¡œê·¸ë¨ ì‹¤í–‰ í›„ 3ë²ˆ ë©”ë‰´ë¥¼ í™•ì¸í•˜ë©´ ëœë‹¤.
- * ì»¨ë² ì´ì–´ ë²¨íŠ¸ êµ¬ì¡°ëŠ” ìˆœí™˜ë˜ëŠ” êµ¬ì¡°ê°€ ì•„ë‹ˆë©° (0,0) (0,1) (0,2) (0,3) ì¼ ê²½ìš°,
- * (0,2)ìœ„ì¹˜ì˜ ì°¨ëŸ‰ì„ ì¶œì°¨í•˜ê¸° ìœ„í•´ì„œëŠ” (0,3)ìœ„ì¹˜ì˜ ì°¨ëŸ‰ì„ ë¨¼ì € ì¶œì°¨í•œ í›„ ê°€ì¥ ìµœë‹¨ê±°ë¦¬ì˜ ë¹„ì–´ìˆëŠ” ì£¼ì°¨ê³µê°„ì— ì£¼ì°¨ì‹œí‚¨ í›„ (0,2)ì°¨ëŸ‰ì„ ì¶œì°¨í•œë‹¤. 
- * ì…ì°¨ëŠ” ìµœë‹¨ê±°ë¦¬, ë‚´ë¦¼ì°¨ìˆœìœ¼ë¡œ ì£¼ì°¨ì‹œí‚¨ë‹¤.
- * ë°ì´í„°ì™€ UIëŠ” ê°ê°ì˜ í´ë˜ìŠ¤ë¡œ ë¶„ë¦¬ì‹œí‚¨ë‹¤. 
+/* ÁÖÂ÷ÇÁ·Î±×·¥
+ * 4x4 ¹è¿­ µÎ °³ÀÇ ÁÖÂ÷°ø°£ÀÌ ÀÖ°í, °¢ ÃşÀº ÄÁº£ÀÌ¾îº§Æ® ±¸Á¶·Î ¿òÁ÷ÀÎ´Ù. 
+ * ÁÖÂ÷°ø°£ÀÇ ¹èÄ¡´Â ÇÁ·Î±×·¥ ½ÇÇà ÈÄ 3¹ø ¸Ş´º¸¦ È®ÀÎÇÏ¸é µÈ´Ù.
+ * ÄÁº£ÀÌ¾î º§Æ® ±¸Á¶´Â ¼øÈ¯µÇ´Â ±¸Á¶°¡ ¾Æ´Ï¸ç (0,0) (0,1) (0,2) (0,3) ÀÏ °æ¿ì,
+ * (0,2)À§Ä¡ÀÇ Â÷·®À» ÃâÂ÷ÇÏ±â À§ÇØ¼­´Â (0,3)À§Ä¡ÀÇ Â÷·®À» ¸ÕÀú ÃâÂ÷ÇÑ ÈÄ °¡Àå ÃÖ´Ü°Å¸®ÀÇ ºñ¾îÀÖ´Â ÁÖÂ÷°ø°£¿¡ ÁÖÂ÷½ÃÅ² ÈÄ (0,2)Â÷·®À» ÃâÂ÷ÇÑ´Ù. 
+ * ÀÔÂ÷´Â ÃÖ´Ü°Å¸®, ³»¸²Â÷¼øÀ¸·Î ÁÖÂ÷½ÃÅ²´Ù.
+ * µ¥ÀÌÅÍ¿Í UI´Â °¢°¢ÀÇ Å¬·¡½º·Î ºĞ¸®½ÃÅ²´Ù. 
 */
 
 public class Main {
@@ -20,45 +20,53 @@ public class Main {
 		carNumber = null;
 	}
 	
-	void menu() {
-	      InOut inOut = new InOut();
-	      //ParkingLot parkingLot = new ParkingLot();
+	public void menu() {
+	      //InOut inOut = new InOut();
+	      ParkingLot parkingLot = new ParkingLot();
 	      
 	      boolean isRun = true;
 	      
 	      while(isRun) {
+	    	 InOut inOut = new InOut();
 	         System.out.println();
 	         System.out.println("-----------------------------------------");
 	         System.out.println();
-	         System.out.println("1.ì…ì°¨    2.ì¶œì°¨     3.ì£¼ì°¨ê³µê°„ë³´ê¸°     4.ì¢…ë£Œ");
+	         System.out.println("1.ÀÔÂ÷    2.ÃâÂ÷     3.ÁÖÂ÷°ø°£º¸±â     4.Á¾·á");
 	         System.out.println();
-	         System.out.print("ë©”ë‰´ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš” : ");
+	         System.out.print("¸Ş´º¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä : ");
 	         int sel = scan.nextInt();
 	         System.out.println();
 	         System.out.println("");
-	         
 	         switch(sel) {
 	         case 1:
-	        	System.out.print("ì°¨ëŸ‰ë²ˆí˜¸ 4ìë¦¬ë¥¼ ì…ë ¥í•˜ì„¸ìš” : ");
+	        	System.out.print("Â÷·®¹øÈ£ 4ÀÚ¸®¸¦ ÀÔ·ÂÇÏ¼¼¿ä : ");
 	   	      	carNumber = scan.next();
+	   	      	inOut.setParkingLotOne(parkingLot.getParkingLotOne());
+	   	      	inOut.setParkingLotTwo(parkingLot.getParkingLotTwo());
 	   	      	inOut.setIn(carNumber);
-	            System.out.println("ì£¼ì°¨ê°€ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤. ");
+	   	      	parkingLot.setParkingLotOne(inOut.getParkingLotOne());
+	   	      	parkingLot.setParkingLotTwo(inOut.getParkingLotTwo());
+	            System.out.println("ÁÖÂ÷°¡ ¿Ï·áµÇ¾ú½À´Ï´Ù. ");
 	            break;
 	               
 	         case 2:
-		        System.out.print("ì°¨ëŸ‰ë²ˆí˜¸ 4ìë¦¬ë¥¼ ì…ë ¥í•˜ì„¸ìš” : ");
+		        System.out.print("Â÷·®¹øÈ£ 4ÀÚ¸®¸¦ ÀÔ·ÂÇÏ¼¼¿ä : ");
 		   	    carNumber = scan.next();
+	   	      	inOut.setParkingLotOne(parkingLot.getParkingLotOne());
+	   	      	inOut.setParkingLotTwo(parkingLot.getParkingLotTwo());
 	            inOut.setOut(carNumber);
-	            System.out.println("ì¶œì°¨ê°€ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤. ");
+	   	      	parkingLot.setParkingLotOne(inOut.getParkingLotOne());
+	   	      	parkingLot.setParkingLotTwo(inOut.getParkingLotTwo());
+	            System.out.println("ÃâÂ÷°¡ ¿Ï·áµÇ¾ú½À´Ï´Ù. ");
 	            break;
 	            
 	         case 3:
-	            inOut.parkingLot.showParkingLot();
+	            parkingLot.showParkingLot();
 	            break;
 	            
 	         case 4:
 	            isRun = false;
-	            System.out.println("í”„ë¡œê·¸ë¨ì„ ì¢…ë£Œí•©ë‹ˆë‹¤.");
+	            System.out.println("ÇÁ·Î±×·¥À» Á¾·áÇÕ´Ï´Ù.");
 	            break;
 	         }
 	      }
@@ -69,6 +77,3 @@ public class Main {
 		main.menu();
 	}
 }
-
-// xml êµ¬ì¡° í™•ì¸
-// íŒŒì‹± ê°œë… í™•ì¸ 
